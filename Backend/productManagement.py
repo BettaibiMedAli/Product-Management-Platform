@@ -3,16 +3,20 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import Products
 from schemas import ProductCreate, ProductResponse
+from auth import get_current_user
 
 
-router = APIRouter(
+product_router = APIRouter(
     prefix="/products",
     tags=["Products"]
 )
 
 
-@router.post("/", response_model=ProductResponse, status_code=status.HTTP_201_CREATED)
-def create_product(product: ProductCreate, db: Session = Depends(get_db)):
+@product_router.post("/", response_model=ProductResponse, status_code=status.HTTP_201_CREATED)
+def create_product(product: ProductCreate,
+                    db: Session = Depends(get_db),
+                    current_user: dict = Depends(get_current_user)):
+
     new_product = Products(
         name=product.name,
         description=product.description,
@@ -26,8 +30,12 @@ def create_product(product: ProductCreate, db: Session = Depends(get_db)):
     return new_product
 
 
-@router.get("/", response_model=list[ProductResponse], status_code=status.HTTP_200_OK)
-def get_products(skip: int = 0, limit: int = 10, search: str = None, db: Session = Depends(get_db)):
+@product_router.get("/", response_model=list[ProductResponse], status_code=status.HTTP_200_OK)
+def get_products(skip: int = 0,
+                limit: int = 10,
+                search: str = None,
+                db: Session = Depends(get_db),
+                current_user: dict = Depends(get_current_user)):
     query = db.query(Products)
     if search:
         query = query.filter(Products.name.contains(search))
@@ -35,16 +43,16 @@ def get_products(skip: int = 0, limit: int = 10, search: str = None, db: Session
     return products
 
 
-@router.get("/{product_id}", response_model=ProductResponse, status_code=status.HTTP_200_OK)
-def get_product(product_id: int, db: Session = Depends(get_db)):
+@product_router.get("/{product_id}", response_model=ProductResponse, status_code=status.HTTP_200_OK)
+def get_product(product_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     product = db.query(Products).filter(Products.id == product_id).first()
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
     return product
 
 
-@router.put("/{product_id}", response_model=ProductResponse, status_code=status.HTTP_200_OK)
-def update_product(product_id: int, newProduct: ProductCreate, db: Session = Depends(get_db)):
+@product_router.put("/{product_id}", response_model=ProductResponse, status_code=status.HTTP_200_OK)
+def update_product(product_id: int, newProduct: ProductCreate, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
 
     product = db.query(Products).filter(Products.id == product_id).first()
 
@@ -62,8 +70,8 @@ def update_product(product_id: int, newProduct: ProductCreate, db: Session = Dep
     return product
 
 
-@router.delete("/{product_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_product(product_id: int, db: Session = Depends(get_db)):
+@product_router.delete("/{product_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_product(product_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     product = db.query(Products).filter(Products.id == product_id).first()
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")

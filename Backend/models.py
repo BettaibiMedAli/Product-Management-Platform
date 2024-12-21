@@ -8,8 +8,8 @@ class Users(Base):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True)
-    hashed_password = Column(String)
+    username = Column(String, unique=True, nullable=False)
+    hashed_password = Column(String,  nullable=False)
 
 class Products(Base):
     __tablename__ = 'products'
