@@ -1,9 +1,5 @@
-# Frontend
-node_modules/
-.env
-build/
-
 # Backend
 __pycache__/
 *.sqlite
 .env
+venv/
