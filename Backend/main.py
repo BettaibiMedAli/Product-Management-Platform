@@ -1,6 +1,6 @@
 from fastapi import FastAPI, status, Depends, HTTPException, APIRouter
 import models
-from database import engine, SessionLocal
+from database import engine, SessionLocal, get_db
 from typing import Annotated
 from sqlalchemy.orm import Session
 import auth 
@@ -14,12 +14,6 @@ app.include_router(product_router)
 
 models.Base.metadata.create_all(bind=engine)
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 db_dependency = Annotated[Session, Depends(get_db)]
 user_dependency = Annotated[dict, Depends(get_current_user)]

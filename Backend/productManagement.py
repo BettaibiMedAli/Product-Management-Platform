@@ -14,7 +14,7 @@ product_router = APIRouter(
 
 @product_router.post("/", response_model=ProductResponse, status_code=status.HTTP_201_CREATED)
 def create_product(product: ProductCreate,
-                    db: Session = Depends(get_db),
+                db: Session = Depends(get_db),
                     current_user: dict = Depends(get_current_user)):
 
     new_product = Products(
