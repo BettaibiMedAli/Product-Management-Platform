@@ -6,8 +6,18 @@ from sqlalchemy.orm import Session
 import auth 
 from auth import get_current_user
 from productManagement import product_router
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(auth.router)
 
 app.include_router(product_router)
