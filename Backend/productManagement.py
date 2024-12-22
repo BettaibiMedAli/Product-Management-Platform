@@ -34,11 +34,20 @@ def create_product(product: ProductCreate,
 def get_products(skip: int = 0,
                 limit: int = 10,
                 search: str = None,
+                category: str = None,
+                sort: str = None,
                 db: Session = Depends(get_db),
                 current_user: dict = Depends(get_current_user)):
     query = db.query(Products)
     if search:
         query = query.filter(Products.name.contains(search))
+    if category:
+        query = query.filter(Products.category == category)
+    if sort:
+        if sort == "asc":
+            query = query.order_by(Products.price.asc())
+        elif sort == "desc":
+            query = query.order_by(Products.price.desc())
     products = query.offset(skip).limit(limit).all()
     return products
 
