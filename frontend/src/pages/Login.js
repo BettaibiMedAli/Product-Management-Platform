@@ -6,18 +6,23 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await LoginUser(username, password);
       const { access_token } = response.data;
 
       localStorage.setItem("token", access_token);
       navigate("/");
+      console.log("Navigating to Dashboard");
     } catch (err) {
       setError("Invalid username or password.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -26,8 +31,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 shadow-lg rounded-lg w-full max-w-md">
+    <div className="min-h-screen bg-custom-bg bg-cover bg-center flex items-center justify-center">
+      <div className="bg-white/40 backdrop-blur-md p-8 shadow-lg rounded-lg w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleLogin} className="space-y-4">
@@ -53,15 +58,16 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+            disabled={isLoading}
+            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500"
           >
-            Login
+            {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
         <div className="mt-4 text-center">
           <button
             onClick={goToRegister}
-            className="text-blue-500 hover:text-blue-600"
+            className="text-black hover:text-gray-700"
           >
             Don't have an account? Register here.
           </button>

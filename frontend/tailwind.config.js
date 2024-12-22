@@ -2,7 +2,10 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx}"],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'custom-bg': "url('/public/bg.avif')",}
+    },
   },
   plugins: [],
 }

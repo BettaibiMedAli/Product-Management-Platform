@@ -4,7 +4,7 @@ const Api_Url = "http://127.0.0.1:8000/auth/"
 
 export const RegisterUser = async (username, password) => {
     try {
-        const response = await axios.post(`${Api_Url}register`, {
+        const response = await axios.post(`${Api_Url}`, {
             username,
             password
         }, {
