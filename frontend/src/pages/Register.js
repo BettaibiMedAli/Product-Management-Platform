@@ -12,6 +12,7 @@ const Register = () => {
 
     const HandleRegister = async(e) => {
         e.preventDefault();
+        
         if(password !== confirmPassword){
             setError("Passwords do not match!")
             return;
@@ -41,7 +42,7 @@ const Register = () => {
       <div className="min-h-screen bg-custom-bg bg-cover bg-center flex items-center justify-center">
         <div className="bg-white/40 p-8 shadow-lg rounded-lg w-full max-w-md">
           <h1 className="text-2xl font-bold mb-6 text-center">Register</h1>
-          {error && <p className="text-red-500 mb-4">{error}</p>}
+          {error && <p className="text-purple-900 mb-4">{error}</p>}
           <form onSubmit={HandleRegister} className="space-y-4">
             <div>
               <label className="block text">Username</label>

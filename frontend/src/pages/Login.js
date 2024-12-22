@@ -12,6 +12,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    
     try {
       const response = await LoginUser(username, password);
       const { access_token } = response.data;
@@ -34,10 +35,10 @@ const Login = () => {
     <div className="min-h-screen bg-custom-bg bg-cover bg-center flex items-center justify-center">
       <div className="bg-white/40 backdrop-blur-md p-8 shadow-lg rounded-lg w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
+        {error && <p className="text-purple-900 mb-4">{error}</p>}
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block text-gray-700">Username</label>
+            <label className="block text-black">Username</label>
             <input
               type="text"
               value={username}
@@ -47,7 +48,7 @@ const Login = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700">Password</label>
+            <label className="block text-black">Password</label>
             <input
               type="password"
               value={password}
