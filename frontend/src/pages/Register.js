@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RegisterUser } from "../api/Auth";
 
 const Register = () => {
@@ -30,12 +30,6 @@ const Register = () => {
           setIsLoading(false); 
       }
     }
-
-
-    const gotToLogin = () => {
-      navigate("/login");
-    };
-
 
 
     return(
@@ -83,12 +77,11 @@ const Register = () => {
             </button>
           </form>
           <div className="mt-4 text-center">
-            <button
-              onClick={gotToLogin}
+            <Link to="/login"
               className="text-black hover:text-gray-700"
             >
               Back to Login
-            </button>
+            </Link>
           </div>
         </div>
       </div>

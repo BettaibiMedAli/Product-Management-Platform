@@ -40,7 +40,7 @@ def get_products(skip: int = 0,
                 current_user: dict = Depends(get_current_user)):
     query = db.query(Products)
     if search:
-        query = query.filter(Products.name.contains(search))
+        query = query.filter(Products.name.ilike(f"%{search}%"))
     if category:
         query = query.filter(Products.category == category)
     if sort:
@@ -76,6 +76,17 @@ def update_product(product_id: int, newProduct: ProductCreate, db: Session = Dep
 
     db.commit()
     db.refresh(product)
+    return product
+
+
+@product_router.put("/{product_id}/favorite", status_code=status.HTTP_200_OK)
+async def update_favorite_status(product_id: int, is_favorite: bool, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+    product = db.query(Products).filter(Products.id == product_id).first()
+    if not product:
+         raise HTTPException(status_code=404, detail="Product not found")
+    product.is_favorite = is_favorite
+    db.commit() 
+    db.refresh(product) 
     return product
 
 

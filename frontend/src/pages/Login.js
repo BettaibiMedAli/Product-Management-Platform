@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LoginUser } from "../api/Auth";
 
 const Login = () => {
@@ -27,9 +27,6 @@ const Login = () => {
     }
   };
 
-  const goToRegister = () => {
-    navigate("/register");
-  };
 
   return (
     <div className="min-h-screen bg-custom-bg bg-cover bg-center flex items-center justify-center">
@@ -66,12 +63,11 @@ const Login = () => {
           </button>
         </form>
         <div className="mt-4 text-center">
-          <button
-            onClick={goToRegister}
+          <Link to="/register"
             className="text-black hover:text-gray-700"
           >
             Don't have an account? Register here.
-          </button>
+          </Link>
         </div>
       </div>
     </div>
