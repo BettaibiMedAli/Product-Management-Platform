@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { FaPlus, FaSignOutAlt } from "react-icons/fa";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -10,19 +11,20 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex flex-col w-20 border-r shadow-sm items-center px-1 py-7 bg-gray-800 text-white">
-      <button
-        className="mb-4 p-2 rounded bg-blue-500 hover:bg-blue-700 w-full text-sm"
+    <div className="flex flex-col w-32 border-r shadow-sm items-center px-2 py-7 bg-gray-800 text-white h-screen">
+      <div
+        className="mb-4 p-3 bg-blue-500 hover:bg-blue-700 rounded-full flex justify-center items-center cursor-pointer"
         onClick={() => navigate("/add-product")}
       >
-        Add
-      </button>
-      <button
-        className="p-2 rounded bg-red-500 hover:bg-red-700 w-full text-sm"
+        <FaPlus className="text-white" size={20} />
+      </div>
+      <div className="flex-grow"></div> {/* Spacer to push Logout to the bottom */}
+      <div
+        className="p-3 bg-red-500 hover:bg-red-700 rounded-full flex justify-center items-center cursor-pointer"
         onClick={handleLogout}
       >
-        Logout
-      </button>
+        <FaSignOutAlt className="text-white" size={20} />
+      </div>
     </div>
   );
 };
