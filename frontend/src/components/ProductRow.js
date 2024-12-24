@@ -1,18 +1,22 @@
 import React from "react";
-import { FaEdit, FaTrash } from "react-icons/fa"; // Import icons
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const ProductRow = ({ product, onEdit, onDelete, onFavorite }) => {
+
   return (
     <div className="flex items-center justify-between border-b py-2">
+      {/* Left Section: Favorite and Product Details */}
       <div className="flex items-center">
+        {/* Favorite Star */}
         <span
           className={`mr-4 cursor-pointer ${
             product.is_favorite ? "text-yellow-500" : "text-gray-400"
           }`}
-          onClick={() => onFavorite(product.id)}
+          onClick={() => onFavorite(product.id)} // Toggle favorite status
         >
           ★
         </span>
+        {/* Product Information */}
         <div className="flex flex-col">
           <span>{product.name}</span>
           <span>Price: {product.price}</span>
@@ -20,20 +24,23 @@ const ProductRow = ({ product, onEdit, onDelete, onFavorite }) => {
           <span>Description: {product.description}</span>
         </div>
       </div>
+
+      {/* Right Section: Actions */}
       <div className="flex space-x-4">
-        {/* Edit Icon with Tooltip */}
+        {/* Edit Icon */}
         <span
           className="text-green-500 cursor-pointer hover:text-green-700"
           onClick={() => onEdit(product.id)}
-          title="Edit Product" // Tooltip added here
+          title="Edit Product" 
         >
           <FaEdit size={24} />
         </span>
-        {/* Delete Icon with Tooltip */}
+
+        {/* Delete Icon */}
         <span
           className="text-red-500 cursor-pointer hover:text-red-700"
           onClick={() => onDelete(product.id)}
-          title="Delete Product" // Tooltip added here
+          title="Delete Product"
         >
           <FaTrash size={24} />
         </span>

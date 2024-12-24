@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { createProduct } from "../api/Product";
 
 const AddProduct = () => {
+
+  // state for form data 
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -10,15 +12,22 @@ const AddProduct = () => {
     category: "",
     is_favorite: false,
   });
+
+  // state for validation errors
   const [errors, setErrors] = useState({});
 
   const navigate = useNavigate();
 
+  // Handle input changes for form fields
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({ ...formData, [name]: type === 'checkbox' ? checked : value });
+    setFormData({ 
+      ...formData, 
+      [name]: type === 'checkbox' ? checked : value 
+    });
   };
 
+  // validation logic
   const validate = () => {
     const newErrors = {};
     if (!formData.name) newErrors.name = "Name is required.";
@@ -28,6 +37,7 @@ const AddProduct = () => {
     return newErrors;
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
@@ -35,9 +45,15 @@ const AddProduct = () => {
       setErrors(validationErrors);
       return;
     }
-    await createProduct(formData);
-    alert("Product added successfully!");
-    navigate("/");
+    
+    try {
+      await createProduct(formData);
+      alert("Product added successfully!");
+      navigate("/");
+    } catch (error) {
+      console.error("Error creating product:", error);
+      alert("Failed to add product.");
+    }
   };
 
   return (
@@ -45,6 +61,7 @@ const AddProduct = () => {
       <div className="bg-white/30 backdrop-blur-xl p-8 shadow-lg rounded-lg w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6 text-center">Add Product</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Name Input */}
           <div>
             <label className="block text-black">Name</label>
             <input
@@ -57,6 +74,8 @@ const AddProduct = () => {
             />
             {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
           </div>
+
+          {/* Description Input */}
           <div>
             <label className="block text-black">Description</label>
             <input
@@ -69,6 +88,8 @@ const AddProduct = () => {
             />
             {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
           </div>
+
+          {/* Price Input */}
           <div>
             <label className="block text-black">Price</label>
             <input
@@ -81,6 +102,8 @@ const AddProduct = () => {
             />
             {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
           </div>
+
+          {/* Category Input */}
           <div>
             <label className="block text-black">Category</label>
             <input
@@ -93,6 +116,8 @@ const AddProduct = () => {
             />
             {errors.category && <p className="text-red-500 text-sm">{errors.category}</p>}
           </div>
+
+          {/* Favorite Checkbox */}
           <div className="flex items-center">
             <input
               type="checkbox"
@@ -103,6 +128,8 @@ const AddProduct = () => {
             />
             <span className="ml-2 text-black">Favorite</span>
           </div>
+
+          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500"

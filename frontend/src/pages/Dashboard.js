@@ -11,13 +11,14 @@ const Dashboard = () => {
   const [showFavorites, setShowFavorites] = useState(false);
   const PRODUCTS_PER_PAGE = 5; // Number of products per page
 
+  // fetch products with pagination,filtering and sorting
   const fetchProductsData = async () => {
     try {
       const skip = (currentPage - 1) * PRODUCTS_PER_PAGE;
       const response = await fetchProducts({
         ...filterParams,
         skip: showFavorites ? 0 : skip, // Reset skip if showing favorites
-        limit: showFavorites ? undefined : PRODUCTS_PER_PAGE, // Fetch all favorites
+        limit: showFavorites ? undefined : PRODUCTS_PER_PAGE,
       });
       setProducts(response);
     } catch (error) {
@@ -31,27 +32,27 @@ const Dashboard = () => {
 
   const handleSearch = (query) => {
     setFilterParams((prev) => ({ ...prev, searchQuery: query }));
-    setCurrentPage(1); // Reset to page 1 on search
+    setCurrentPage(1);
   };
 
   const handleFilter = () => {
     const category = prompt("Enter category to filter:");
     if (category) {
       setFilterParams((prev) => ({ ...prev, category }));
-      setCurrentPage(1); // Reset to page 1 on filter
+      setCurrentPage(1);
     }
   };
 
   const handleSort = (sort) => {
     if (sort === "asc" || sort === "desc") {
       setFilterParams((prev) => ({ ...prev, sort }));
-      setCurrentPage(1); // Reset to page 1 on sort
+      setCurrentPage(1);
     }
   };
 
   const handleToggleFavorites = () => {
     setShowFavorites((prev) => !prev);
-    setCurrentPage(1); // Reset to page 1 when toggling favorites
+    setCurrentPage(1);
   };
 
   const handleProductDeleted = (id) => {
@@ -62,7 +63,9 @@ const Dashboard = () => {
     try {
       const product = products.find((p) => p.id === id);
       const updatedProduct = await updateFavoriteStatus(id, !product.is_favorite);
-      setProducts(products.map((p) => (p.id === id ? updatedProduct : p)));
+      setProducts((prevProducts) =>
+        prevProducts.map((p) => (p.id === id ? updatedProduct : p))
+      );
     } catch (error) {
       console.error("Error updating favorite status:", error);
       alert("Failed to update favorite status.");

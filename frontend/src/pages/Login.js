@@ -11,22 +11,24 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    if (!username || !password) {
+      setError("Please enter both username and password.");
+      return;
+    }
     setIsLoading(true);
-    
+
     try {
       const response = await LoginUser(username, password);
       const { access_token } = response.data;
 
       localStorage.setItem("token", access_token);
       navigate("/");
-      console.log("Navigating to Dashboard");
     } catch (err) {
       setError("Invalid username or password.");
     } finally {
       setIsLoading(false);
     }
   };
-
 
   return (
     <div className="min-h-screen bg-custom-bg bg-cover bg-center flex items-center justify-center">
@@ -63,9 +65,7 @@ const Login = () => {
           </button>
         </form>
         <div className="mt-4 text-center">
-          <Link to="/register"
-            className="text-black hover:text-gray-700"
-          >
+          <Link to="/register" className="text-black hover:text-gray-700">
             Don't have an account? Register here.
           </Link>
         </div>

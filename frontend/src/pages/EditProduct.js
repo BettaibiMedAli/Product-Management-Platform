@@ -15,6 +15,7 @@ const EditProduct = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
 
+  // Fetch product details when the component mounts or when the productId changes
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
@@ -30,6 +31,7 @@ const EditProduct = () => {
     fetchProductDetails();
   }, [productId]);
 
+  // Handle input changes
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
     setProduct((prevProduct) => ({
@@ -38,6 +40,7 @@ const EditProduct = () => {
     }));
   };
 
+  // Validate form inputs
   const validate = async () => {
     const newErrors = {};
     if (!product.name) newErrors.name = "Name is required.";
@@ -45,14 +48,17 @@ const EditProduct = () => {
     if (product.price <= 0) newErrors.price = "Price must be greater than zero.";
     if (!product.category) newErrors.category = "Category is required.";
 
-    // Check if the new name exists for another product (excluding the current product)
+    // Check if the product name exists for another product
     const products = await fetchProducts({});
-    const nameExists = products.some((p) => p.id !== parseInt(productId) && p.name.toLowerCase() === product.name.toLowerCase());
+    const nameExists = products.some(
+      (p) => p.id !== parseInt(productId) && p.name.toLowerCase() === product.name.toLowerCase()
+    );
     if (nameExists) newErrors.name = "Product name already exists.";
 
     return newErrors;
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = await validate();
@@ -60,11 +66,13 @@ const EditProduct = () => {
       setErrors(validationErrors);
       return;
     }
-    // Check for changes
+
+    // Check if the product details have changed
     if (JSON.stringify(product) === JSON.stringify(originalProduct)) {
       alert("Nothing to update!");
       return;
     }
+
     try {
       await updateProduct(productId, product);
       alert("Product updated successfully!");
@@ -79,6 +87,7 @@ const EditProduct = () => {
       <div className="bg-white/30 backdrop-blur-xl p-8 shadow-lg rounded-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Edit Product</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Name Input */}
           <div>
             <label className="block text-black">Name</label>
             <input
@@ -91,6 +100,8 @@ const EditProduct = () => {
             />
             {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
           </div>
+
+          {/* Description Input */}
           <div>
             <label className="block text-black">Description</label>
             <input
@@ -103,6 +114,8 @@ const EditProduct = () => {
             />
             {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
           </div>
+
+          {/* Price Input */}
           <div>
             <label className="block text-black">Price</label>
             <input
@@ -115,6 +128,8 @@ const EditProduct = () => {
             />
             {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
           </div>
+
+          {/* Category Input */}
           <div>
             <label className="block text-black">Category</label>
             <input
@@ -127,6 +142,8 @@ const EditProduct = () => {
             />
             {errors.category && <p className="text-red-500 text-sm">{errors.category}</p>}
           </div>
+
+          {/* Favorite Checkbox */}
           <div className="flex items-center">
             <input
               type="checkbox"
@@ -137,6 +154,8 @@ const EditProduct = () => {
             />
             <span className="ml-2 text-black">Favorite</span>
           </div>
+
+          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600"

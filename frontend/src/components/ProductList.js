@@ -6,6 +6,7 @@ import { deleteProduct } from "../api/Product";
 const ProductList = ({ products, onProductDeleted, onFavorite }) => {
   const navigate = useNavigate();
 
+  // Handle product deletion and update the parent state
   const handleDelete = async (id) => {
     try {
       await deleteProduct(id);
@@ -17,6 +18,7 @@ const ProductList = ({ products, onProductDeleted, onFavorite }) => {
     }
   };
 
+  // Navigate to edit product page
   const handleEdit = (id) => {
     navigate(`/edit-product/${id}`);
   };
@@ -32,7 +34,7 @@ const ProductList = ({ products, onProductDeleted, onFavorite }) => {
             product={product}
             onEdit={handleEdit}
             onDelete={handleDelete}
-            onFavorite={onFavorite} // Pass onFavorite here
+            onFavorite={onFavorite}
           />
         ))
       )}
