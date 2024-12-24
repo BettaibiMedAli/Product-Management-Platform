@@ -1,6 +1,5 @@
 from database import Base
 from sqlalchemy import Column, Integer, String, Float, Boolean
-from typing import Optional
 
 
 
@@ -20,5 +19,6 @@ class Products(Base):
     price = Column(Float)
     category = Column(String)
     is_favorite = Column(Boolean)
+
 
     

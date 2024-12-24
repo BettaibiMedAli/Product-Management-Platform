@@ -7,6 +7,7 @@ import { fetchProducts, updateFavoriteStatus } from "../api/Product";
 const Dashboard = () => {
   const [products, setProducts] = useState([]);
   const [filterParams, setFilterParams] = useState({ category: "", sort: "", searchQuery: "" });
+  const [showFavorites, setShowFavorites] = useState(false);
 
   const fetchProductsData = async () => {
     try {
@@ -21,7 +22,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchProductsData();
-  }, [filterParams]);
+  }, [filterParams, showFavorites]);
 
   const handleSearch = (query) => {
     console.log("Search query:", query);
@@ -35,13 +36,15 @@ const Dashboard = () => {
     }
   };
 
-  const handleSort = () => {
-    const sort = prompt("Enter sorting order (asc/desc):");
+  const handleSort = (sort) => {
+    console.log("Sort order:", sort);
     if (sort === "asc" || sort === "desc") {
       setFilterParams((prev) => ({ ...prev, sort }));
-    } else {
-      alert("Invalid input. Please enter 'asc' or 'desc'.");
     }
+  };
+
+  const handleToggleFavorites = () => {
+    setShowFavorites((prev) => !prev);
   };
 
   const handleProductDeleted = (id) => {
@@ -59,14 +62,23 @@ const Dashboard = () => {
     }
   };
 
+  // Filter products to show only favorites if showFavorites is true
+  const displayedProducts = showFavorites ? products.filter((product) => product.is_favorite) : products;
+
   return (
     <div className="flex w-screen overflow-hidden h-screen">
       <Sidebar />
       <div className="flex flex-col w-full">
-        <Header onSearch={handleSearch} onFilter={handleFilter} onSort={handleSort} />
+        <Header 
+          onSearch={handleSearch} 
+          onFilter={handleFilter} 
+          onSort={handleSort} 
+          onToggleFavorites={handleToggleFavorites} 
+          showFavorites={showFavorites} // Pass showFavorites here
+        />
         <main className="px-4 py-5 w-full flex-grow">
           <ProductList
-            products={products}
+            products={displayedProducts}
             onProductDeleted={handleProductDeleted}
             onFavorite={handleFavorite} // Pass handleFavorite here
           />

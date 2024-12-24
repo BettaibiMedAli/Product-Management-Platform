@@ -4,7 +4,10 @@ from database import get_db
 from models import Products
 from schemas import ProductCreate, ProductResponse
 from auth import get_current_user
+from pydantic import BaseModel
 
+class FavoriteStatusUpdate(BaseModel): 
+    is_favorite: bool
 
 product_router = APIRouter(
     prefix="/products",
@@ -80,11 +83,11 @@ def update_product(product_id: int, newProduct: ProductCreate, db: Session = Dep
 
 
 @product_router.put("/{product_id}/favorite", status_code=status.HTTP_200_OK)
-async def update_favorite_status(product_id: int, is_favorite: bool, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+async def update_favorite_status(product_id: int, update: FavoriteStatusUpdate, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     product = db.query(Products).filter(Products.id == product_id).first()
     if not product:
          raise HTTPException(status_code=404, detail="Product not found")
-    product.is_favorite = is_favorite
+    product.is_favorite = update.is_favorite
     db.commit() 
     db.refresh(product) 
     return product
