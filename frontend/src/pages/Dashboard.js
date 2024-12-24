@@ -6,7 +6,7 @@ import { fetchProducts, updateFavoriteStatus } from "../api/Product";
 
 const Dashboard = () => {
   const [products, setProducts] = useState([]);
-  const [filterParams, setFilterParams] = useState({ category: "", sort: "", searchQuery: "" });
+  const [filterParams, setFilterParams] = useState({ category: "", sort: "", searchQuery: "", skip: 0, limit: 10 });
   const [showFavorites, setShowFavorites] = useState(false);
 
   const fetchProductsData = async () => {
@@ -74,13 +74,13 @@ const Dashboard = () => {
           onFilter={handleFilter} 
           onSort={handleSort} 
           onToggleFavorites={handleToggleFavorites} 
-          showFavorites={showFavorites} // Pass showFavorites here
+          showFavorites={showFavorites}
         />
         <main className="px-4 py-5 w-full flex-grow">
           <ProductList
             products={displayedProducts}
             onProductDeleted={handleProductDeleted}
-            onFavorite={handleFavorite} // Pass handleFavorite here
+            onFavorite={handleFavorite}
           />
         </main>
       </div>

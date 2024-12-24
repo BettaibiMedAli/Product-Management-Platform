@@ -41,77 +41,77 @@ const AddProduct = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white p-6 shadow-lg rounded-lg">
-      <h2 className="text-2xl font-bold mb-6 text-center">Add Product</h2>
-      <div className="mb-4">
-        <label className="block text-gray-700">Name</label>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleChange}
-          className={`w-full border rounded px-3 py-2 ${errors.name && 'border-red-500'}`}
-        />
-        {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+    <div className="min-h-screen bg-add-bg bg-cover bg-center flex items-center justify-center">
+      <div className="bg-white/30 backdrop-blur-xl p-8 shadow-lg rounded-lg w-full max-w-md">
+        <h1 className="text-2xl font-bold mb-6 text-center">Add Product</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-black">Name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={formData.name}
+              onChange={handleChange}
+              className={`w-full border px-4 py-2 rounded-lg ${errors.name && 'border-red-500'}`}
+            />
+            {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+          </div>
+          <div>
+            <label className="block text-black">Description</label>
+            <input
+              type="text"
+              name="description"
+              placeholder="Description"
+              value={formData.description}
+              onChange={handleChange}
+              className={`w-full border px-4 py-2 rounded-lg ${errors.description && 'border-red-500'}`}
+            />
+            {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
+          </div>
+          <div>
+            <label className="block text-black">Price</label>
+            <input
+              type="number"
+              name="price"
+              placeholder="Price"
+              value={formData.price}
+              onChange={handleChange}
+              className={`w-full border px-4 py-2 rounded-lg ${errors.price && 'border-red-500'}`}
+            />
+            {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
+          </div>
+          <div>
+            <label className="block text-black">Category</label>
+            <input
+              type="text"
+              name="category"
+              placeholder="Category"
+              value={formData.category}
+              onChange={handleChange}
+              className={`w-full border px-4 py-2 rounded-lg ${errors.category && 'border-red-500'}`}
+            />
+            {errors.category && <p className="text-red-500 text-sm">{errors.category}</p>}
+          </div>
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              name="is_favorite"
+              checked={formData.is_favorite}
+              onChange={(e) => setFormData({ ...formData, is_favorite: e.target.checked })}
+              className="form-checkbox"
+            />
+            <span className="ml-2 text-black">Favorite</span>
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500"
+          >
+            Add Product
+          </button>
+        </form>
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Description</label>
-        <input
-          type="text"
-          name="description"
-          placeholder="Description"
-          value={formData.description}
-          onChange={handleChange}
-          className={`w-full border rounded px-3 py-2 ${errors.description && 'border-red-500'}`}
-        />
-        {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Price</label>
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          value={formData.price}
-          onChange={handleChange}
-          className={`w-full border rounded px-3 py-2 ${errors.price && 'border-red-500'}`}
-        />
-        {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Category</label>
-        <input
-          type="text"
-          name="category"
-          placeholder="Category"
-          value={formData.category}
-          onChange={handleChange}
-          className={`w-full border rounded px-3 py-2 ${errors.category && 'border-red-500'}`}
-        />
-        {errors.category && <p className="text-red-500 text-sm">{errors.category}</p>}
-      </div>
-      <div className="mb-4">
-        <label className="inline-flex items-center">
-          <input
-            type="checkbox"
-            name="is_favorite"
-            checked={formData.is_favorite}
-            onChange={(e) =>
-              setFormData({ ...formData, is_favorite: e.target.checked })
-            }
-            className="form-checkbox"
-          />
-          <span className="ml-2">Favorite</span>
-        </label>
-      </div>
-      <button
-        type="submit"
-        className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-      >
-        Add Product
-      </button>
-    </form>
+    </div>
   );
 };
 

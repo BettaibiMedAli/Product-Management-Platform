@@ -2,10 +2,10 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8000/products/";
 
-export const fetchProducts = async ({ category, sort, searchQuery }) => {
+export const fetchProducts = async ({ category, sort, searchQuery, skip = 0, limit = 10 }) => {
   console.log("Fetching products with params:", { category, sort, searchQuery });
   const response = await axios.get(API_URL, { 
-    params: { category, sort, search: searchQuery }, 
+    params: { category, sort, search: searchQuery, skip, limit }, 
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   }); 
   console.log("Fetched products response:", response.data); 

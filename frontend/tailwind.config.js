@@ -4,7 +4,10 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'custom-bg': "url('/public/bg.avif')",}
+        'custom-bg': "url('/public/bg.avif')",
+        'add-bg': "url('/public/bgAdd.avif')",
+        'edit-bg': "url('/public/bgEdit.avif')"
+      }
     },
   },
   plugins: [],

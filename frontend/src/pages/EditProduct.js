@@ -75,75 +75,77 @@ const EditProduct = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white p-6 shadow-lg rounded-lg">
-      <h2 className="text-2xl font-bold mb-6 text-center">Edit Product</h2>
-      <div className="mb-4">
-        <label className="block text-gray-700">Name</label>
-        <input
-          type="text"
-          name="name"
-          value={product.name}
-          onChange={handleChange}
-          placeholder="Product Name"
-          className={`w-full border rounded px-3 py-2 ${errors.name && 'border-red-500'}`}
-        />
-        {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+    <div className="min-h-screen bg-edit-bg bg-cover bg-center flex items-center justify-center">
+      <div className="bg-white/30 backdrop-blur-xl p-8 shadow-lg rounded-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">Edit Product</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-black">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={product.name}
+              onChange={handleChange}
+              placeholder="Product Name"
+              className={`w-full border px-4 py-2 rounded-lg ${errors.name && 'border-red-500'}`}
+            />
+            {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+          </div>
+          <div>
+            <label className="block text-black">Description</label>
+            <input
+              type="text"
+              name="description"
+              value={product.description}
+              onChange={handleChange}
+              placeholder="Product Description"
+              className={`w-full border px-4 py-2 rounded-lg ${errors.description && 'border-red-500'}`}
+            />
+            {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
+          </div>
+          <div>
+            <label className="block text-black">Price</label>
+            <input
+              type="number"
+              name="price"
+              value={product.price}
+              onChange={handleChange}
+              placeholder="Product Price"
+              className={`w-full border px-4 py-2 rounded-lg ${errors.price && 'border-red-500'}`}
+            />
+            {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
+          </div>
+          <div>
+            <label className="block text-black">Category</label>
+            <input
+              type="text"
+              name="category"
+              value={product.category}
+              onChange={handleChange}
+              placeholder="Product Category"
+              className={`w-full border px-4 py-2 rounded-lg ${errors.category && 'border-red-500'}`}
+            />
+            {errors.category && <p className="text-red-500 text-sm">{errors.category}</p>}
+          </div>
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              name="is_favorite"
+              checked={product.is_favorite}
+              onChange={handleChange}
+              className="form-checkbox"
+            />
+            <span className="ml-2 text-black">Favorite</span>
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600"
+          >
+            Update Product
+          </button>
+        </form>
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Description</label>
-        <input
-          type="text"
-          name="description"
-          value={product.description}
-          onChange={handleChange}
-          placeholder="Product Description"
-          className={`w-full border rounded px-3 py-2 ${errors.description && 'border-red-500'}`}
-        />
-        {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Price</label>
-        <input
-          type="number"
-          name="price"
-          value={product.price}
-          onChange={handleChange}
-          placeholder="Product Price"
-          className={`w-full border rounded px-3 py-2 ${errors.price && 'border-red-500'}`}
-        />
-        {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Category</label>
-        <input
-          type="text"
-          name="category"
-          value={product.category}
-          onChange={handleChange}
-          placeholder="Product Category"
-          className={`w-full border rounded px-3 py-2 ${errors.category && 'border-red-500'}`}
-        />
-        {errors.category && <p className="text-red-500 text-sm">{errors.category}</p>}
-      </div>
-      <div className="mb-4">
-        <label className="inline-flex items-center">
-          <input
-            type="checkbox"
-            name="is_favorite"
-            checked={product.is_favorite}
-            onChange={handleChange}
-            className="form-checkbox"
-          />
-          <span className="ml-2">Favorite</span>
-        </label>
-      </div>
-      <button
-        type="submit"
-        className="w-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-      >
-        Update Product
-      </button>
-    </form>
+    </div>
   );
 };
 
