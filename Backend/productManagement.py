@@ -14,12 +14,11 @@ product_router = APIRouter(
     tags=["Products"]
 )
 
-
+# Create a new product
 @product_router.post("/", response_model=ProductResponse, status_code=status.HTTP_201_CREATED)
 def create_product(product: ProductCreate,
                 db: Session = Depends(get_db),
                     current_user: dict = Depends(get_current_user)):
-
     new_product = Products(
         name=product.name,
         description=product.description,
@@ -33,6 +32,7 @@ def create_product(product: ProductCreate,
     return new_product
 
 
+# Fetch products with optional filters, pagination and sorting
 @product_router.get("/", response_model=list[ProductResponse], status_code=status.HTTP_200_OK)
 def get_products(skip: int = 0,
                 limit: int = 10,
@@ -55,6 +55,7 @@ def get_products(skip: int = 0,
     return products
 
 
+# Get product by Id
 @product_router.get("/{product_id}", response_model=ProductResponse, status_code=status.HTTP_200_OK)
 def get_product(product_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     product = db.query(Products).filter(Products.id == product_id).first()
@@ -63,9 +64,9 @@ def get_product(product_id: int, db: Session = Depends(get_db), current_user: di
     return product
 
 
+# update existing product
 @product_router.put("/{product_id}", response_model=ProductResponse, status_code=status.HTTP_200_OK)
 def update_product(product_id: int, newProduct: ProductCreate, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
-
     product = db.query(Products).filter(Products.id == product_id).first()
 
     if not product:
@@ -82,17 +83,19 @@ def update_product(product_id: int, newProduct: ProductCreate, db: Session = Dep
     return product
 
 
+# Update the favorite status of a product
 @product_router.put("/{product_id}/favorite", status_code=status.HTTP_200_OK)
 async def update_favorite_status(product_id: int, update: FavoriteStatusUpdate, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     product = db.query(Products).filter(Products.id == product_id).first()
     if not product:
          raise HTTPException(status_code=404, detail="Product not found")
+    
     product.is_favorite = update.is_favorite
     db.commit() 
     db.refresh(product) 
     return product
 
-
+# Delete product by Id
 @product_router.delete("/{product_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_product(product_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     product = db.query(Products).filter(Products.id == product_id).first()
