@@ -1,5 +1,6 @@
 
-# Full-Stack Application with React and FastAPI
+# Product Management Platform
+
 
 ## Overview
 
