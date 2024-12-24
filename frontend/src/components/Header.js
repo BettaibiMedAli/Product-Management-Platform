@@ -15,18 +15,23 @@ const Header = ({ onSearch, onFilter, onSort, onToggleFavorites, showFavorites }
 
   return (
     <header className="h-14 border-b p-4 flex items-center bg-white justify-between">
-      <div className="flex items-center space-x-4">
+      {/* Left Section: App Title */}
+      <div className="flex items-center">
         <h1
           className="cursor-pointer text-xl font-bold text-blue-500"
           onClick={() => window.location.href = '/'}
         >
           Product Management Platform
         </h1>
+      </div>
+
+      {/* Center Section: Search and Filter */}
+      <div className="flex items-center space-x-4 mx-auto">
         <div className="relative">
           <input
             type="text"
             placeholder="Search products..."
-            className="border px-4 py-2 rounded w-full"
+            className="border px-4 py-2 rounded w-64"
             value={localSearchQuery}
             onChange={handleSearchChange}
           />
@@ -40,6 +45,16 @@ const Header = ({ onSearch, onFilter, onSort, onToggleFavorites, showFavorites }
         >
           Filter
         </button>
+      </div>
+
+      {/* Right Section: Favorites and Sort Buttons */}
+      <div className="flex items-center space-x-4">
+        <button
+          className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 min-w-[160px]" // Fixed width for button
+          onClick={onToggleFavorites}
+        >
+          {showFavorites ? "Show All" : "Show Favorites"}
+        </button>
         <select
           className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
           onChange={(e) => onSort(e.target.value)}
@@ -48,12 +63,6 @@ const Header = ({ onSearch, onFilter, onSort, onToggleFavorites, showFavorites }
           <option value="asc">Ascending</option>
           <option value="desc">Descending</option>
         </select>
-        <button
-          className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
-          onClick={onToggleFavorites}
-        >
-          {showFavorites ? "Show All" : "Show Favorites"}
-        </button>
       </div>
     </header>
   );
