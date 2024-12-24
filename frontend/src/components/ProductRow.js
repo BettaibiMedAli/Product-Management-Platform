@@ -4,7 +4,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 const ProductRow = ({ product, onEdit, onDelete, onFavorite }) => {
 
   return (
-    <div className="flex items-center justify-between border-b py-2">
+    <div className="flex items-center justify-between border-b py-4">
       {/* Left Section: Favorite and Product Details */}
       <div className="flex items-center">
         {/* Favorite Star */}
@@ -33,7 +33,7 @@ const ProductRow = ({ product, onEdit, onDelete, onFavorite }) => {
           onClick={() => onEdit(product.id)}
           title="Edit Product" 
         >
-          <FaEdit size={24} />
+          <FaEdit size={28} />
         </span>
 
         {/* Delete Icon */}
@@ -42,7 +42,7 @@ const ProductRow = ({ product, onEdit, onDelete, onFavorite }) => {
           onClick={() => onDelete(product.id)}
           title="Delete Product"
         >
-          <FaTrash size={24} />
+          <FaTrash size={26} />
         </span>
       </div>
     </div>

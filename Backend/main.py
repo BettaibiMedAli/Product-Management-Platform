@@ -1,6 +1,6 @@
 from fastapi import FastAPI, status, Depends, HTTPException, APIRouter
 import models
-from database import engine, SessionLocal, get_db
+from database import engine, get_db
 from typing import Annotated
 from sqlalchemy.orm import Session
 import auth
@@ -13,10 +13,10 @@ app = FastAPI()
 # Add CORS middleware to allow requests from React frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Adjust to the URL of your frontend
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods
-    allow_headers=["*"],  # Allow all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Include authentication and product management routes
